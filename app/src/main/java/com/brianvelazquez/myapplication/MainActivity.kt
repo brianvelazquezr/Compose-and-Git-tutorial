@@ -7,6 +7,8 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -36,7 +38,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     Column() {
                         var text by remember { mutableStateOf("") }
-                        MyOutlinedTextField(myText = text) {text = it}
+                        MyOutlinedTextField(myText = text) { text = it }
                     }
                 }
             }
@@ -48,8 +50,16 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     MyApplicationTheme {
-        MyImageAdvance()
+        MyIcon()
     }
+}
+
+@Composable
+fun MyIcon() {
+    Icon(imageVector = Icons.Default.Search,
+        contentDescription = "icon",
+        tint = Color.Yellow
+    )
 }
 
 @Composable
@@ -57,7 +67,9 @@ fun MyImageAdvance() {
     Image(
         painter = painterResource(id = R.drawable.ic_launcher_background),
         contentDescription = "Example",
-        modifier = Modifier.clip(CircleShape).border(5.dp,Color.Green, CircleShape)
+        modifier = Modifier
+            .clip(CircleShape)
+            .border(5.dp, Color.Green, CircleShape)
     )
 }
 
@@ -109,82 +121,94 @@ fun MyButtons() {
 }
 
 @Composable
-fun MyOutlinedTextField(myText: String, onValueChanged:(String) -> Unit){
+fun MyOutlinedTextField(myText: String, onValueChanged: (String) -> Unit) {
     OutlinedTextField(
         value = myText,
-        onValueChange = {onValueChanged(it)},
-        label = { Text(text = "Escribe algo")},
+        onValueChange = { onValueChanged(it) },
+        label = { Text(text = "Escribe algo") },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = Color.Green,
             unfocusedBorderColor = Color.Blue
-        ))
+        )
+    )
 }
 
 @Composable
-fun MyStateExample(){
+fun MyStateExample() {
     var counter by rememberSaveable {
         mutableStateOf(0)
     }
-    Column(Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-        Button(onClick = { counter += 1}) {
+    Column(
+        Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Button(onClick = { counter += 1 }) {
             Text(text = "Button")
         }
-        
+
         Text(text = "Me han pulsado ${counter} veces")
-        
+
     }
 }
 
 @Composable
-fun MyLayouts(){
+fun MyLayouts() {
     Column(Modifier.fillMaxSize()) {
-        Box(modifier = Modifier
-            .fillMaxWidth()
-            .weight(1f)
-            .background(Color.Cyan), contentAlignment = Alignment.Center
-        ){
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .background(Color.Cyan), contentAlignment = Alignment.Center
+        ) {
             Text(text = "Ejemplo 1")
         }
         MySpacer(size = 30)
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .weight(1f)
-            .horizontalScroll(rememberScrollState())){
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .horizontalScroll(rememberScrollState())
+        ) {
             Box(
                 Modifier
                     .fillMaxHeight()
                     .width(200.dp)
-                    .background(Color.Red), contentAlignment = Alignment.Center){
+                    .background(Color.Red), contentAlignment = Alignment.Center
+            ) {
                 Text(text = "Ejemplo 1")
             }
             Box(
                 Modifier
                     .fillMaxHeight()
                     .width(200.dp)
-                    .background(Color.Green), contentAlignment = Alignment.Center){
+                    .background(Color.Green), contentAlignment = Alignment.Center
+            ) {
                 Text(text = "Ejemplo 1")
             }
             Box(
                 Modifier
                     .fillMaxHeight()
                     .width(200.dp)
-                    .background(Color.Red), contentAlignment = Alignment.Center){
+                    .background(Color.Red), contentAlignment = Alignment.Center
+            ) {
                 Text(text = "Ejemplo 1")
             }
             Box(
                 Modifier
                     .fillMaxHeight()
                     .width(200.dp)
-                    .background(Color.Green), contentAlignment = Alignment.Center){
+                    .background(Color.Green), contentAlignment = Alignment.Center
+            ) {
                 Text(text = "Ejemplo 1")
             }
         }
         MySpacer(size = 30)
-        Box(modifier = Modifier
-            .fillMaxWidth()
-            .weight(1f)
-            .background(Color.Magenta), contentAlignment = Alignment.BottomCenter){
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .background(Color.Magenta), contentAlignment = Alignment.BottomCenter
+        ) {
             Text(text = "Ejemplo 1")
         }
     }
@@ -192,16 +216,17 @@ fun MyLayouts(){
 }
 
 @Composable
-fun MySpacer(size: Int){
+fun MySpacer(size: Int) {
     Spacer(modifier = Modifier.height(size.dp))
 }
 
 @Composable
-fun MyRow(){
+fun MyRow() {
     Row(
         Modifier
             .fillMaxSize()
-            .horizontalScroll(rememberScrollState())) {
+            .horizontalScroll(rememberScrollState())
+    ) {
         Text(text = "Ejemplo 1", Modifier.width(100.dp))
         Text(text = "Ejemplo 1", Modifier.width(100.dp))
         Text(text = "Ejemplo 1", Modifier.width(100.dp))
@@ -226,125 +251,169 @@ fun MyRow(){
 }
 
 @Composable
-fun MyColumn(){
+fun MyColumn() {
     Column(
         Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.SpaceBetween) {
-        Text(text = "Ejemplo 1",
+            .verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = "Ejemplo 1",
             Modifier
                 .height(100.dp)
                 .background(Color.Blue)
-                .fillMaxWidth())
-        Text(text = "Ejemplo 2",
+                .fillMaxWidth()
+        )
+        Text(
+            text = "Ejemplo 2",
             Modifier
                 .height(100.dp)
                 .background(Color.Yellow)
-                .fillMaxWidth())
-        Text(text = "Ejemplo 3",
+                .fillMaxWidth()
+        )
+        Text(
+            text = "Ejemplo 3",
             Modifier
                 .height(100.dp)
                 .background(Color.Green)
-                .fillMaxWidth())
-        Text(text = "Ejemplo 4",
+                .fillMaxWidth()
+        )
+        Text(
+            text = "Ejemplo 4",
             Modifier
                 .height(100.dp)
                 .background(Color.Gray)
-                .fillMaxWidth())
-        Text(text = "Ejemplo 5",
+                .fillMaxWidth()
+        )
+        Text(
+            text = "Ejemplo 5",
             Modifier
                 .height(100.dp)
                 .background(Color.Magenta)
-                .fillMaxWidth())
-        Text(text = "Ejemplo 1",
+                .fillMaxWidth()
+        )
+        Text(
+            text = "Ejemplo 1",
             Modifier
                 .height(100.dp)
                 .background(Color.Blue)
-                .fillMaxWidth())
-        Text(text = "Ejemplo 2",
+                .fillMaxWidth()
+        )
+        Text(
+            text = "Ejemplo 2",
             Modifier
                 .height(100.dp)
                 .background(Color.Yellow)
-                .fillMaxWidth())
-        Text(text = "Ejemplo 3",
+                .fillMaxWidth()
+        )
+        Text(
+            text = "Ejemplo 3",
             Modifier
                 .height(100.dp)
                 .background(Color.Green)
-                .fillMaxWidth())
-        Text(text = "Ejemplo 4",
+                .fillMaxWidth()
+        )
+        Text(
+            text = "Ejemplo 4",
             Modifier
                 .height(100.dp)
                 .background(Color.Gray)
-                .fillMaxWidth())
-        Text(text = "Ejemplo 5",
+                .fillMaxWidth()
+        )
+        Text(
+            text = "Ejemplo 5",
             Modifier
                 .height(100.dp)
                 .background(Color.Magenta)
-                .fillMaxWidth())
-        Text(text = "Ejemplo 1",
+                .fillMaxWidth()
+        )
+        Text(
+            text = "Ejemplo 1",
             Modifier
                 .height(100.dp)
                 .background(Color.Blue)
-                .fillMaxWidth())
-        Text(text = "Ejemplo 2",
+                .fillMaxWidth()
+        )
+        Text(
+            text = "Ejemplo 2",
             Modifier
                 .height(100.dp)
                 .background(Color.Yellow)
-                .fillMaxWidth())
-        Text(text = "Ejemplo 3",
+                .fillMaxWidth()
+        )
+        Text(
+            text = "Ejemplo 3",
             Modifier
                 .height(100.dp)
                 .background(Color.Green)
-                .fillMaxWidth())
-        Text(text = "Ejemplo 4",
+                .fillMaxWidth()
+        )
+        Text(
+            text = "Ejemplo 4",
             Modifier
                 .height(100.dp)
                 .background(Color.Gray)
-                .fillMaxWidth())
-        Text(text = "Ejemplo 5",
+                .fillMaxWidth()
+        )
+        Text(
+            text = "Ejemplo 5",
             Modifier
                 .height(100.dp)
                 .background(Color.Magenta)
-                .fillMaxWidth())
-        Text(text = "Ejemplo 1",
+                .fillMaxWidth()
+        )
+        Text(
+            text = "Ejemplo 1",
             Modifier
                 .height(100.dp)
                 .background(Color.Blue)
-                .fillMaxWidth())
-        Text(text = "Ejemplo 2",
+                .fillMaxWidth()
+        )
+        Text(
+            text = "Ejemplo 2",
             Modifier
                 .height(100.dp)
                 .background(Color.Yellow)
-                .fillMaxWidth())
-        Text(text = "Ejemplo 3",
+                .fillMaxWidth()
+        )
+        Text(
+            text = "Ejemplo 3",
             Modifier
                 .height(100.dp)
                 .background(Color.Green)
-                .fillMaxWidth())
-        Text(text = "Ejemplo 4",
+                .fillMaxWidth()
+        )
+        Text(
+            text = "Ejemplo 4",
             Modifier
                 .height(100.dp)
                 .background(Color.Gray)
-                .fillMaxWidth())
-        Text(text = "Ejemplo 5",
+                .fillMaxWidth()
+        )
+        Text(
+            text = "Ejemplo 5",
             Modifier
                 .height(100.dp)
                 .background(Color.Magenta)
-                .fillMaxWidth())
+                .fillMaxWidth()
+        )
 
     }
 }
 
 @Composable
 fun MyBox(name: String) {
-    Box(modifier = Modifier.fillMaxSize(), 
-        contentAlignment = Alignment.Center){
-        Box(modifier = Modifier
-            .width(200.dp)
-            .height(200.dp)
-            .background(Color.Blue),
-        contentAlignment = Alignment.BottomCenter
-        ){
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Box(
+            modifier = Modifier
+                .width(200.dp)
+                .height(200.dp)
+                .background(Color.Blue),
+            contentAlignment = Alignment.BottomCenter
+        ) {
             Text(text = "Hola $name", color = Color.White)
         }
     }
