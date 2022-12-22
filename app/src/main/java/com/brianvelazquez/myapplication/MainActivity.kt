@@ -3,17 +3,17 @@ package com.brianvelazquez.myapplication
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
-import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.brianvelazquez.myapplication.ui.theme.MyApplicationTheme
@@ -48,8 +48,64 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     MyApplicationTheme {
-        //MyOutlinedTextField()
+        MyImageAdvance()
     }
+}
+
+@Composable
+fun MyImageAdvance() {
+    Image(
+        painter = painterResource(id = R.drawable.ic_launcher_background),
+        contentDescription = "Example",
+        modifier = Modifier.clip(CircleShape).border(5.dp,Color.Green, CircleShape)
+    )
+}
+
+@Composable
+fun MyImage() {
+    Image(
+        painter = painterResource(id = R.drawable.ic_launcher_background),
+        contentDescription = "Example",
+        alpha = 5f
+    )
+}
+
+@Composable
+fun MyButtons() {
+
+    var enabled by rememberSaveable { mutableStateOf(true) }
+
+    Column(Modifier.fillMaxSize()) {
+        Button(
+            onClick = { enabled = false },
+            modifier = Modifier.padding(20.dp),
+            enabled = enabled,
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = Color.Gray,
+                contentColor = Color.Black
+            )
+        ) {
+            Text(text = "Hola")
+        }
+
+        OutlinedButton(
+            onClick = { enabled = false },
+            enabled = enabled,
+            modifier = Modifier.padding(start = 20.dp),
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = Color.Gray,
+                contentColor = Color.Black
+            )
+        ) {
+            Text(text = "Hello")
+        }
+
+        TextButton(onClick = { }, Modifier.padding(start = 20.dp, top = 20.dp)) {
+            Text(text = "Ciao")
+        }
+
+    }
+
 }
 
 @Composable
