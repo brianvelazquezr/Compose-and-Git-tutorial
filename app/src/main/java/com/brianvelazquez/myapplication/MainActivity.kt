@@ -35,7 +35,13 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     Column() {
-                        val textExample = "hello"
+                        //Exaple for git
+                        val textExample = ""
+                        print(textExample)
+                        print(textExample)
+                        print(textExample)
+                        print(textExample)
+                        //Exaple for git /finish
                         var text by remember { mutableStateOf(textExample) }
                         MyOutlinedTextField(myText = text) {text = it}
                     }
