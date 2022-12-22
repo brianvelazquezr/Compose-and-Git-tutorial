@@ -36,10 +36,11 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Column() {
+                    MyProgressBarAdvanced()
+                    /*Column() {
                         var text by remember { mutableStateOf("") }
                         MyOutlinedTextField(myText = text) { text = it }
-                    }
+                    }*/
                 }
             }
         }
@@ -50,7 +51,46 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     MyApplicationTheme {
-        MyIcon()
+        MyProgressBarAdvanced()
+    }
+}
+
+@Composable
+fun MyProgressBarAdvanced(){
+    var progress by rememberSaveable{ mutableStateOf(.10f) }
+    Column(Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        CircularProgressIndicator(progress)
+        Row(Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center) {
+            Button(onClick = { progress += .10f},
+            modifier = Modifier.padding(10.dp)) {
+                Text(text = "Incrementar")
+            }
+            Button(onClick = { progress -= .10f},
+                modifier = Modifier.padding(10.dp)) {
+                Text(text = "Decrementar")
+            }
+        }
+    }
+}
+
+@Composable
+fun MyProgressBar(){
+    var showProgress by rememberSaveable { mutableStateOf(false) }
+    Column(Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        if(showProgress){
+            CircularProgressIndicator()
+            LinearProgressIndicator()
+        }
+        OutlinedButton(onClick = { showProgress = !showProgress}) {
+            Text(text = "Mostrar")
+        }
     }
 }
 
