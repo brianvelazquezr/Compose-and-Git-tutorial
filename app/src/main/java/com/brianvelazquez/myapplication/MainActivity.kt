@@ -35,8 +35,9 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     Column() {
-                        var text by remember { mutableStateOf("") }
-                        MyOutlinedTextField(myText = text) {text = it}
+                        //var text by remember { mutableStateOf("") }
+                        //MyOutlinedTextField(myText = text) {text = it}
+                        MyButtons()
                     }
                 }
             }
@@ -48,8 +49,46 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     MyApplicationTheme {
-        //MyOutlinedTextField()
+        MyButtons()
     }
+}
+
+@Composable
+fun MyButtons(){
+
+    var enabled by rememberSaveable{ mutableStateOf(true) }
+
+    Column(Modifier.fillMaxSize()) {
+        Button(
+            onClick = { enabled = false },
+            modifier = Modifier.padding(20.dp),
+            enabled = enabled,
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = Color.Gray,
+                contentColor = Color.Black
+            )
+        ) {
+            Text(text = "Hola")
+        }
+
+        OutlinedButton(
+            onClick = {enabled = false },
+            enabled = enabled,
+            modifier = Modifier.padding(start = 20.dp),
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = Color.Gray,
+                contentColor = Color.Black
+            )
+        ) {
+            Text(text = "Hello")
+        }
+
+        TextButton(onClick = {  }, Modifier.padding(start = 20.dp, top = 20.dp)) {
+            Text(text = "Ciao")
+        }
+
+    }
+
 }
 
 @Composable
