@@ -32,18 +32,32 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyApplicationTheme {
                 // A surface container using the 'background' color from the theme
+
+                var selected by rememberSaveable{mutableStateOf("Brian")}
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    MyProgressBarAdvanced()
-                    /*Column() {
-                        var text by remember { mutableStateOf("") }
-                        MyOutlinedTextField(myText = text) { text = it }
-                    }*/
+                    MyRadioButtonList(name = selected, onItemselected = {selected = it})
+
                 }
             }
         }
+    }
+}
+
+
+
+@Composable
+fun GetOptions(titles : List<String>): List<CheckInfo>{
+    return titles.map {
+        var status by rememberSaveable { mutableStateOf(false) }
+        CheckInfo(
+            title = it,
+            selected = status,
+            onCheckedChange = {status = it}
+        )
     }
 }
 
@@ -51,7 +65,40 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     MyApplicationTheme {
-        MyProgressBarAdvanced()
+
+    }
+}
+
+@Composable
+fun MyRadioButtonList(name: String, onItemselected:(String) -> Unit){
+
+    Column(Modifier.fillMaxSize()) {
+        Row() {
+            RadioButton(selected = name == "Angel", onClick = {onItemselected("Angel")})
+            Text(text = "Angel", Modifier.padding(top = 11.dp))
+        }
+
+        Row() {
+            RadioButton(selected = name == "Brian", onClick = {onItemselected("Brian")})
+            Text(text = "Brian", Modifier.padding(top = 11.dp))
+        }
+
+        Row() {
+            RadioButton(selected = name == "Adonai", onClick = {onItemselected("Adonai")})
+            Text(text = "Adonai", Modifier.padding(top = 11.dp))
+        }
+
+    }
+    
+}
+
+@Composable
+fun MyCheckboxWithText(checkInfo: CheckInfo){
+    Row() {
+        Checkbox(
+            checked = checkInfo.selected,
+            onCheckedChange = {checkInfo.onCheckedChange(!checkInfo.selected)})
+        Text(text = checkInfo.title, Modifier.padding(top = 11.dp))
     }
 }
 
