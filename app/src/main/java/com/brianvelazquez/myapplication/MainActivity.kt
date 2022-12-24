@@ -39,7 +39,13 @@ class MainActivity : ComponentActivity() {
                     //modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    MyDropdownMenu()
+                    var show by rememberSaveable{ mutableStateOf(false) }
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Button(onClick = { show = true}) {
+                            Text(text = "Mostrar dialogo")
+                        }
+                    }
+                    MyAccountDialog(show = show, onDismiss = {show = false})
                 }
             }
         }
@@ -80,7 +86,9 @@ fun MyDropdownMenu(){
             value = selectedText,
             onValueChange = {selectedText = it },
             enabled = false,
-            modifier = Modifier.fillMaxWidth().clickable { expanded = true }
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { expanded = true }
         )
 
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
@@ -97,7 +105,7 @@ fun MyDropdownMenu(){
     }
 
 
-    
+
 }
 
 @Composable
@@ -120,7 +128,7 @@ fun MyRadioButtonList(name: String, onItemselected:(String) -> Unit){
         }
 
     }
-    
+
 }
 
 @Composable
