@@ -36,11 +36,10 @@ class MainActivity : ComponentActivity() {
                 var selected by rememberSaveable{mutableStateOf("Brian")}
 
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
+                    //modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    MyRadioButtonList(name = selected, onItemselected = {selected = it})
-
+                    MyDropdownMenu()
                 }
             }
         }
@@ -67,6 +66,38 @@ fun DefaultPreview() {
     MyApplicationTheme {
 
     }
+}
+
+@Composable
+fun MyDropdownMenu(){
+    var selectedText by rememberSaveable{ mutableStateOf("") }
+    var expanded by remember { mutableStateOf(false) }
+
+    val desserts = listOf("Angel", "Brian", "Adonai", "Velazquez", "Ruiz")
+
+    Column(Modifier.padding(20.dp)) {
+        OutlinedTextField(
+            value = selectedText,
+            onValueChange = {selectedText = it },
+            enabled = false,
+            modifier = Modifier.fillMaxWidth().clickable { expanded = true }
+        )
+
+        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            desserts.forEach { dessert ->
+                DropdownMenuItem(onClick = {
+                    selectedText = dessert
+                    expanded = false
+                }) {
+                    Text(text = dessert)
+                }
+            }
+        }
+
+    }
+
+
+    
 }
 
 @Composable
