@@ -26,6 +26,7 @@ import com.brianvelazquez.myapplication.ui.theme.MyApplicationTheme
  *
  * */
 
+@ExperimentalFoundationApi
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,13 +40,7 @@ class MainActivity : ComponentActivity() {
                     //modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    var show by rememberSaveable{ mutableStateOf(false) }
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Button(onClick = { show = true}) {
-                            Text(text = "Mostrar dialogo")
-                        }
-                    }
-                    MyAccountDialog(show = show, onDismiss = {show = false})
+                    ScaffoldExample()
                 }
             }
         }
