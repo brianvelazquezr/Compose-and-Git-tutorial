@@ -1,4 +1,4 @@
-package com.brianvelazquez.myapplication
+package com.brianvelazquez.myapplication.model
 
 data class CheckInfo(
     val title: String,

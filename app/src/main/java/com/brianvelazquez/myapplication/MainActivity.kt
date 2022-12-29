@@ -18,6 +18,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.brianvelazquez.myapplication.model.CheckInfo
+import com.brianvelazquez.myapplication.model.Routes
 import com.brianvelazquez.myapplication.ui.theme.MyApplicationTheme
 
 /**
@@ -34,13 +41,39 @@ class MainActivity : ComponentActivity() {
             MyApplicationTheme {
                 // A surface container using the 'background' color from the theme
 
-                var selected by rememberSaveable{mutableStateOf("Brian")}
-
                 Surface(
                     //modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    ScaffoldExample()
+                    val navController = rememberNavController()
+                    NavHost(
+                        navController = navController,
+                        startDestination = Routes.Screen1.route
+                    ) {
+                        composable(Routes.Screen1.route) { Screen1(navController) }
+                        composable(Routes.Screen2.route) { Screen2(navController) }
+                        composable(Routes.Screen3.route) { Screen3(navController) }
+                        composable(
+                            Routes.Screen4.route,
+                            arguments = listOf(navArgument("num") { type = NavType.IntType })
+                        ) { backStackEntry ->
+                            Screen4(
+                                navController,
+                                backStackEntry.arguments?.getInt("num") ?: 0
+                            )
+                        }
+                        composable(
+                            Routes.Screen5.route,
+                            arguments = listOf(navArgument("string") {
+                                defaultValue = "defaultVale"
+                            })
+                        ) { backStackEntry ->
+                            Screen5(
+                                navController,
+                                backStackEntry.arguments?.getString("string")
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -48,15 +81,14 @@ class MainActivity : ComponentActivity() {
 }
 
 
-
 @Composable
-fun GetOptions(titles : List<String>): List<CheckInfo>{
+fun GetOptions(titles: List<String>): List<CheckInfo> {
     return titles.map {
         var status by rememberSaveable { mutableStateOf(false) }
         CheckInfo(
             title = it,
             selected = status,
-            onCheckedChange = {status = it}
+            onCheckedChange = { status = it }
         )
     }
 }
@@ -70,8 +102,8 @@ fun DefaultPreview() {
 }
 
 @Composable
-fun MyDropdownMenu(){
-    var selectedText by rememberSaveable{ mutableStateOf("") }
+fun MyDropdownMenu() {
+    var selectedText by rememberSaveable { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
 
     val desserts = listOf("Angel", "Brian", "Adonai", "Velazquez", "Ruiz")
@@ -79,7 +111,7 @@ fun MyDropdownMenu(){
     Column(Modifier.padding(20.dp)) {
         OutlinedTextField(
             value = selectedText,
-            onValueChange = {selectedText = it },
+            onValueChange = { selectedText = it },
             enabled = false,
             modifier = Modifier
                 .fillMaxWidth()
@@ -100,25 +132,24 @@ fun MyDropdownMenu(){
     }
 
 
-
 }
 
 @Composable
-fun MyRadioButtonList(name: String, onItemselected:(String) -> Unit){
+fun MyRadioButtonList(name: String, onItemselected: (String) -> Unit) {
 
     Column(Modifier.fillMaxSize()) {
         Row() {
-            RadioButton(selected = name == "Angel", onClick = {onItemselected("Angel")})
+            RadioButton(selected = name == "Angel", onClick = { onItemselected("Angel") })
             Text(text = "Angel", Modifier.padding(top = 11.dp))
         }
 
         Row() {
-            RadioButton(selected = name == "Brian", onClick = {onItemselected("Brian")})
+            RadioButton(selected = name == "Brian", onClick = { onItemselected("Brian") })
             Text(text = "Brian", Modifier.padding(top = 11.dp))
         }
 
         Row() {
-            RadioButton(selected = name == "Adonai", onClick = {onItemselected("Adonai")})
+            RadioButton(selected = name == "Adonai", onClick = { onItemselected("Adonai") })
             Text(text = "Adonai", Modifier.padding(top = 11.dp))
         }
 
@@ -127,31 +158,38 @@ fun MyRadioButtonList(name: String, onItemselected:(String) -> Unit){
 }
 
 @Composable
-fun MyCheckboxWithText(checkInfo: CheckInfo){
+fun MyCheckboxWithText(checkInfo: CheckInfo) {
     Row() {
         Checkbox(
             checked = checkInfo.selected,
-            onCheckedChange = {checkInfo.onCheckedChange(!checkInfo.selected)})
+            onCheckedChange = { checkInfo.onCheckedChange(!checkInfo.selected) })
         Text(text = checkInfo.title, Modifier.padding(top = 11.dp))
     }
 }
 
 @Composable
-fun MyProgressBarAdvanced(){
-    var progress by rememberSaveable{ mutableStateOf(.10f) }
-    Column(Modifier.fillMaxSize(),
+fun MyProgressBarAdvanced() {
+    var progress by rememberSaveable { mutableStateOf(.10f) }
+    Column(
+        Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         CircularProgressIndicator(progress)
-        Row(Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center) {
-            Button(onClick = { progress += .10f},
-            modifier = Modifier.padding(10.dp)) {
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Button(
+                onClick = { progress += .10f },
+                modifier = Modifier.padding(10.dp)
+            ) {
                 Text(text = "Incrementar")
             }
-            Button(onClick = { progress -= .10f},
-                modifier = Modifier.padding(10.dp)) {
+            Button(
+                onClick = { progress -= .10f },
+                modifier = Modifier.padding(10.dp)
+            ) {
                 Text(text = "Decrementar")
             }
         }
@@ -159,17 +197,18 @@ fun MyProgressBarAdvanced(){
 }
 
 @Composable
-fun MyProgressBar(){
+fun MyProgressBar() {
     var showProgress by rememberSaveable { mutableStateOf(false) }
-    Column(Modifier.fillMaxSize(),
+    Column(
+        Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if(showProgress){
+        if (showProgress) {
             CircularProgressIndicator()
             LinearProgressIndicator()
         }
-        OutlinedButton(onClick = { showProgress = !showProgress}) {
+        OutlinedButton(onClick = { showProgress = !showProgress }) {
             Text(text = "Mostrar")
         }
     }
@@ -177,7 +216,8 @@ fun MyProgressBar(){
 
 @Composable
 fun MyIcon() {
-    Icon(imageVector = Icons.Default.Search,
+    Icon(
+        imageVector = Icons.Default.Search,
         contentDescription = "icon",
         tint = Color.Yellow
     )
