@@ -45,41 +45,45 @@ class MainActivity : ComponentActivity() {
                     //modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    val navController = rememberNavController()
-                    NavHost(
-                        navController = navController,
-                        startDestination = Routes.Screen1.route
-                    ) {
-                        composable(Routes.Screen1.route) { Screen1(navController) }
-                        composable(Routes.Screen2.route) { Screen2(navController) }
-                        composable(Routes.Screen3.route) { Screen3(navController) }
-                        composable(
-                            Routes.Screen4.route,
-                            arguments = listOf(navArgument("num") { type = NavType.IntType })
-                        ) { backStackEntry ->
-                            Screen4(
-                                navController,
-                                backStackEntry.arguments?.getInt("num") ?: 0
-                            )
-                        }
-                        composable(
-                            Routes.Screen5.route,
-                            arguments = listOf(navArgument("string") {
-                                defaultValue = "defaultVale"
-                            })
-                        ) { backStackEntry ->
-                            Screen5(
-                                navController,
-                                backStackEntry.arguments?.getString("string")
-                            )
-                        }
-                    }
+                    VisibilityAnimation()
                 }
             }
         }
     }
 }
 
+@Composable
+fun MyNavigationConfig(){
+    val navController = rememberNavController()
+    NavHost(
+        navController = navController,
+        startDestination = Routes.Screen1.route
+    ) {
+        composable(Routes.Screen1.route) { Screen1(navController) }
+        composable(Routes.Screen2.route) { Screen2(navController) }
+        composable(Routes.Screen3.route) { Screen3(navController) }
+        composable(
+            Routes.Screen4.route,
+            arguments = listOf(navArgument("num") { type = NavType.IntType })
+        ) { backStackEntry ->
+            Screen4(
+                navController,
+                backStackEntry.arguments?.getInt("num") ?: 0
+            )
+        }
+        composable(
+            Routes.Screen5.route,
+            arguments = listOf(navArgument("string") {
+                defaultValue = "defaultVale"
+            })
+        ) { backStackEntry ->
+            Screen5(
+                navController,
+                backStackEntry.arguments?.getString("string")
+            )
+        }
+    }
+}
 
 @Composable
 fun GetOptions(titles: List<String>): List<CheckInfo> {
